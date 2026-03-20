@@ -11,7 +11,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Bio Embalagens Agro | Embalagens Biodegradáveis para o Agronegócio',
   description: 'Empresa pioneira no desenvolvimento de embalagens biodegradáveis para o agronegócio. Inovação e tecnologia a serviço do campo e do meio ambiente.',
-  generator: 'v0.app',
+  generator: '',
   keywords: ['embalagens biodegradáveis', 'agronegócio', 'sustentabilidade', 'cotesia', 'controle biológico'],
   icons: {
     icon: [
