@@ -161,12 +161,13 @@ export function Footer() {
 
       {/* Bottom Bar */}
       <div className="border-t border-primary-foreground/20">
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-4 mt-4">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-xs sm:text-sm text-primary-foreground/60 text-center sm:text-left">
               {new Date().getFullYear()} Bio Embalagens Agro. Todos os direitos
               reservados.
             </p>
+
             <a
               href="#"
               className="flex items-center gap-2 text-xs sm:text-sm text-primary-foreground/60 hover:text-primary-foreground transition-colors"
@@ -177,6 +178,16 @@ export function Footer() {
           </div>
         </div>
       </div>
+     
+        <div className="container mx-auto px-4 py-2">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className="text-xs sm:text-sm text-primary-foreground/60 text-center sm:text-left">
+              Desenvolvido por <a href="https://vexisoficial.com" target="_blank" rel="noopener noreferrer" className="text-primary-foreground hover:text-primary-foreground/80 transition-colors">Vexis</a>
+            </p>
+
+          </div>
+        </div>
+   
     </footer>
   )
 }
