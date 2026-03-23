@@ -18,10 +18,10 @@ export default function HomePage() {
       <main>
         <HeroSection />
         <NumerosSection />
+        <ProdutosSection />
+        <SolucoesSection />
         <NossaHistoriaSection />
         <MissaoVisaoValoresSection />
-        <SolucoesSection />
-        <ProdutosSection />
         <CTABannerSection />
         <TrabalheConoscoSection />
         <ContatoSection />

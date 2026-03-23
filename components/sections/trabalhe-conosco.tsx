@@ -50,7 +50,8 @@ export function TrabalheConoscoSection() {
       const data = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.error || "Erro ao enviar candidatura")
+        const msg = data.debug ? `${data.error}\n\nDetalhe: ${data.debug}` : (data.error || "Erro ao enviar candidatura")
+        throw new Error(msg)
       }
 
       setIsSubmitted(true)

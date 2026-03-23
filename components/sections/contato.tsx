@@ -50,7 +50,8 @@ export function ContatoSection() {
       const data = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.error || "Erro ao enviar mensagem")
+        const msg = data.debug ? `${data.error}\n\nDetalhe: ${data.debug}` : (data.error || "Erro ao enviar mensagem")
+        throw new Error(msg)
       }
 
       setIsSubmitted(true)

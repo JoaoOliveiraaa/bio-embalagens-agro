@@ -28,8 +28,12 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       console.error("Resend error:", error)
+      const showDebug = process.env.ENABLE_EMAIL_DEBUG === "true"
       return NextResponse.json(
-        { error: "Erro ao enviar candidatura. Tente novamente." },
+        {
+          error: "Erro ao enviar candidatura. Tente novamente.",
+          ...(showDebug && { debug: error.message }),
+        },
         { status: 500 }
       )
     }

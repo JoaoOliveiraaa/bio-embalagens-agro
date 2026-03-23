@@ -4,11 +4,14 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 
 // Para enviar a outros destinatários, o domínio deve estar verificado no Resend (resend.com/domains).
 // onboarding@resend.dev só envia para o e-mail do dono da conta.
-const FROM =
+const FROM = (
   process.env.RESEND_FROM_EMAIL ||
-  "Bio Embalagens Agro <noreply@bioembalagensagro.com.br>"
-const TO =
-  process.env.RESEND_TO_EMAIL || "contato@bioembalagensagro.com.br"
+  "Bio Embalagens Agro <noreply@bioagroembalagens.com.br>"
+).trim()
+const TO = (
+  process.env.RESEND_TO_EMAIL ||
+  "contato@bioembalagensagro.com.br"
+).trim()
 
 export interface ContactEmailData {
   name: string
