@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { sendWorkWithUsEmail } from "@/lib/resend"
 
-/**
- * Endpoint equivalente a /api/work-with-us.
- * O formulário "Trabalhe Conosco" envia para este endpoint.
- */
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData()
@@ -43,7 +39,7 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     )
   } catch (error) {
-    console.error("API trabalhe-conosco error:", error)
+    console.error("API work-with-us error:", error)
     return NextResponse.json(
       { error: "Erro interno do servidor. Tente novamente mais tarde." },
       { status: 500 }
