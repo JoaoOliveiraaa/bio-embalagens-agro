@@ -24,7 +24,7 @@ export function HeroSection() {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
         <Image
-          src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1920&q=80"
+          src="images/canavial.jpg"
           alt="Campo agrícola"
           fill
           className="object-cover"
