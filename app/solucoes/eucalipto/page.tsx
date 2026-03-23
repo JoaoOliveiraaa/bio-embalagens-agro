@@ -106,7 +106,7 @@ export default function EucaliptoPage() {
             <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
               Solicitar Orçamento
             </Button>
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+            <Button size="lg" variant="outline" className="border-white text-white bg-white/10 hover:bg-white/20">
               Falar com Especialista
             </Button>
           </div>
@@ -249,7 +249,7 @@ export default function EucaliptoPage() {
             <Button 
               size="lg" 
               variant="outline" 
-              className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10"
+              className="border-primary-foreground text-primary-foreground bg-white/10 hover:bg-white/20"
               asChild
             >
               <Link href="/#contato">

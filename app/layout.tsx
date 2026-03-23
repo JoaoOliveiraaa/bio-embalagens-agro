@@ -11,7 +11,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Bio Embalagens Agro | Embalagens Biodegradáveis para o Agronegócio',
   description: 'Empresa pioneira no desenvolvimento de embalagens biodegradáveis para o agronegócio. Inovação e tecnologia a serviço do campo e do meio ambiente.',
-  generator: '',
+  generator: 'v0.app',
   keywords: ['embalagens biodegradáveis', 'agronegócio', 'sustentabilidade', 'cotesia', 'controle biológico'],
   icons: {
     icon: [
@@ -22,6 +22,10 @@ export const metadata: Metadata = {
       {
         url: '/icon-dark-32x32.png',
         media: '(prefers-color-scheme: dark)',
+      },
+      {
+        url: '/icon.svg',
+        type: 'image/svg+xml',
       },
     ],
     apple: '/apple-icon.png',
@@ -40,7 +44,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="pt-BR" className={inter.variable}>
+    <html lang="pt-BR" className={inter.variable} data-scroll-behavior="smooth">
       <body className="font-sans antialiased">
         {children}
         <Analytics />

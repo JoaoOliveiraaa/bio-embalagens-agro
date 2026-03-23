@@ -5,15 +5,63 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Phone, Mail, MessageCircle, MapPin, CheckCircle, Send, Clock } from "lucide-react"
+import { Phone, Mail, MessageCircle, MapPin, CheckCircle, Send, Clock, AlertCircle, Loader2 } from "lucide-react"
 
 export function ContatoSection() {
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [error, setError] = useState("")
+  
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+  })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.id.replace("contact-", "")]: e.target.value,
+    }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setIsSubmitted(true)
-    setTimeout(() => setIsSubmitted(false), 3000)
+    setIsSubmitting(true)
+    setError("")
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          subject: formData.subject,
+          message: formData.message,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || "Erro ao enviar mensagem")
+      }
+
+      setIsSubmitted(true)
+      setFormData({ name: "", email: "", phone: "", subject: "", message: "" })
+      
+      setTimeout(() => setIsSubmitted(false), 5000)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Erro ao enviar mensagem. Tente novamente.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -146,6 +194,13 @@ export function ContatoSection() {
                   <Send className="w-5 h-5 text-primary" />
                   Envie sua mensagem
                 </h3>
+
+                {error && (
+                  <div className="mb-6 p-4 bg-destructive/10 border border-destructive/20 rounded-lg flex items-center gap-3 text-destructive">
+                    <AlertCircle className="h-5 w-5 flex-shrink-0" />
+                    <p className="text-sm">{error}</p>
+                  </div>
+                )}
                 
                 <div className="space-y-5">
                   <div className="grid sm:grid-cols-2 gap-5">
@@ -156,6 +211,9 @@ export function ContatoSection() {
                         type="text"
                         placeholder="Seu nome"
                         required
+                        value={formData.name}
+                        onChange={handleChange}
+                        disabled={isSubmitting}
                         className="h-11"
                       />
                     </div>
@@ -166,6 +224,9 @@ export function ContatoSection() {
                         type="email"
                         placeholder="seu@email.com"
                         required
+                        value={formData.email}
+                        onChange={handleChange}
+                        disabled={isSubmitting}
                         className="h-11"
                       />
                     </div>
@@ -178,37 +239,56 @@ export function ContatoSection() {
                         id="contact-phone"
                         type="tel"
                         placeholder="(00) 00000-0000"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        disabled={isSubmitting}
                         className="h-11"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="subject">Assunto *</Label>
+                      <Label htmlFor="contact-subject">Assunto *</Label>
                       <Input
-                        id="subject"
+                        id="contact-subject"
                         type="text"
                         placeholder="Assunto da mensagem"
                         required
+                        value={formData.subject}
+                        onChange={handleChange}
+                        disabled={isSubmitting}
                         className="h-11"
                       />
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="message">Mensagem *</Label>
+                    <Label htmlFor="contact-message">Mensagem *</Label>
                     <Textarea
-                      id="message"
+                      id="contact-message"
                       placeholder="Escreva sua mensagem aqui..."
                       required
+                      value={formData.message}
+                      onChange={handleChange}
+                      disabled={isSubmitting}
                       className="min-h-[140px] resize-none"
                     />
                   </div>
 
                   <Button
                     type="submit"
+                    disabled={isSubmitting}
                     className="w-full h-12 bg-primary hover:bg-primary/90 font-semibold text-base"
                   >
-                    <Send className="mr-2 h-4 w-4" />
-                    Enviar Mensagem
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Enviando...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="mr-2 h-4 w-4" />
+                        Enviar Mensagem
+                      </>
+                    )}
                   </Button>
                   
                   <p className="text-xs text-muted-foreground text-center">

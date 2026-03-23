@@ -1,10 +1,10 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Briefcase, Upload, CheckCircle, Heart, Leaf, Users } from "lucide-react"
+import { Briefcase, Upload, CheckCircle, Heart, Leaf, Users, AlertCircle, Loader2 } from "lucide-react"
 
 const benefits = [
   {
@@ -25,18 +25,57 @@ const benefits = [
 ]
 
 export function TrabalheConoscoSection() {
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [error, setError] = useState("")
   const [fileName, setFileName] = useState("")
+  const formRef = useRef<HTMLFormElement>(null)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setIsSubmitted(true)
-    setTimeout(() => setIsSubmitted(false), 3000)
+    setIsSubmitting(true)
+    setError("")
+
+    try {
+      const form = formRef.current
+      if (!form) return
+
+      const formData = new FormData(form)
+
+      const response = await fetch("/api/trabalhe-conosco", {
+        method: "POST",
+        body: formData,
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || "Erro ao enviar candidatura")
+      }
+
+      setIsSubmitted(true)
+      setFileName("")
+      form.reset()
+      
+      setTimeout(() => setIsSubmitted(false), 5000)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Erro ao enviar candidatura. Tente novamente.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setFileName(e.target.files[0].name)
+      const file = e.target.files[0]
+      // Validate file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        setError("O arquivo deve ter no máximo 5MB")
+        e.target.value = ""
+        return
+      }
+      setFileName(file.name)
+      setError("")
     }
   }
 
@@ -107,6 +146,7 @@ export function TrabalheConoscoSection() {
               </div>
             ) : (
               <form
+                ref={formRef}
                 onSubmit={handleSubmit}
                 className="bg-card rounded-2xl shadow-lg p-6 md:p-8 border border-border"
               >
@@ -120,15 +160,24 @@ export function TrabalheConoscoSection() {
                   </div>
                 </div>
 
+                {error && (
+                  <div className="mb-6 p-4 bg-destructive/10 border border-destructive/20 rounded-lg flex items-center gap-3 text-destructive">
+                    <AlertCircle className="h-5 w-5 flex-shrink-0" />
+                    <p className="text-sm">{error}</p>
+                  </div>
+                )}
+
                 <div className="space-y-5">
                   <div className="grid sm:grid-cols-2 gap-5">
                     <div className="space-y-2">
                       <Label htmlFor="name">Nome completo *</Label>
                       <Input
                         id="name"
+                        name="name"
                         type="text"
                         placeholder="Seu nome"
                         required
+                        disabled={isSubmitting}
                         className="h-11"
                       />
                     </div>
@@ -136,9 +185,11 @@ export function TrabalheConoscoSection() {
                       <Label htmlFor="email">E-mail *</Label>
                       <Input
                         id="email"
+                        name="email"
                         type="email"
                         placeholder="seu@email.com"
                         required
+                        disabled={isSubmitting}
                         className="h-11"
                       />
                     </div>
@@ -149,9 +200,11 @@ export function TrabalheConoscoSection() {
                       <Label htmlFor="phone">Telefone *</Label>
                       <Input
                         id="phone"
+                        name="phone"
                         type="tel"
                         placeholder="(00) 00000-0000"
                         required
+                        disabled={isSubmitting}
                         className="h-11"
                       />
                     </div>
@@ -159,22 +212,26 @@ export function TrabalheConoscoSection() {
                       <Label htmlFor="position">Área de interesse</Label>
                       <Input
                         id="position"
+                        name="position"
                         type="text"
                         placeholder="Ex: Produção, Administrativo"
+                        disabled={isSubmitting}
                         className="h-11"
                       />
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="cv">Currículo (PDF, DOC) *</Label>
+                    <Label htmlFor="cv">Currículo (PDF, DOC - máx. 5MB) *</Label>
                     <div className="relative">
                       <Input
                         id="cv"
+                        name="cv"
                         type="file"
                         accept=".pdf,.doc,.docx"
                         onChange={handleFileChange}
                         required
+                        disabled={isSubmitting}
                         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                       />
                       <div className="h-12 px-4 border border-input rounded-lg bg-background flex items-center gap-3 text-muted-foreground hover:border-primary transition-colors">
@@ -188,9 +245,17 @@ export function TrabalheConoscoSection() {
 
                   <Button
                     type="submit"
+                    disabled={isSubmitting}
                     className="w-full h-12 bg-primary hover:bg-primary/90 font-semibold text-base"
                   >
-                    Enviar Currículo
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Enviando...
+                      </>
+                    ) : (
+                      "Enviar Currículo"
+                    )}
                   </Button>
                   
                   <p className="text-xs text-muted-foreground text-center">
