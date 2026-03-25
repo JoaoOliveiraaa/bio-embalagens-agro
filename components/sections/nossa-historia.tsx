@@ -98,7 +98,7 @@ export function NossaHistoriaSection() {
               <div className="space-y-4">
                 <div className="aspect-[4/5] rounded-2xl overflow-hidden bg-secondary relative shadow-lg">
                   <Image
-                    src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=600&q=80"
+                    src="images/bannereucalipto.jpg"
                     alt="Campo de cana-de-açúcar"
                     fill
                     className="object-cover hover:scale-105 transition-transform duration-500"
@@ -114,7 +114,7 @@ export function NossaHistoriaSection() {
               <div className="space-y-4 pt-8">
                 <div className="aspect-square rounded-2xl overflow-hidden bg-secondary relative shadow-lg">
                   <Image
-                    src="https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?w=600&q=80"
+                    src="images/bannereucalipto2.jpg"
                     alt="Plantação de eucalipto"
                     fill
                     className="object-cover hover:scale-105 transition-transform duration-500"

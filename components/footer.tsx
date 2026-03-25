@@ -165,7 +165,7 @@ export function Footer() {
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-xs sm:text-sm text-primary-foreground/60 text-center sm:text-left">
               {new Date().getFullYear()} Bio Embalagens Agro. Todos os direitos
-              reservados.
+              reservados. Desenvovido por <a href="https://www.vexisoficial.com" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/60 hover:text-primary-foreground transition-colors">Vexis Oficial</a>
             </p>
             <a
               href="#"
