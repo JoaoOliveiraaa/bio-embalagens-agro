@@ -67,7 +67,7 @@ export function HeroSection() {
               <span className="inline-flex items-center gap-2">
                 <Leaf className="w-4 h-4" />
                 <span>
-                  Pioneira em embalagens para aplicação via drone de agentes biológicos <em>"Cotesia flavipes"</em>
+                Pioneira do desenvolvimento da embalagem para aplicação via drone do agente biológico <em>"Cotesia flavipes"</em>
                 </span>
               </span>
 
@@ -82,7 +82,7 @@ export function HeroSection() {
           >
             Embalagens{" "}
             <span className="text-accent">Degradáveis</span>{" "}
-            para o Agro
+            para  <br></br>o Agro
           </h1>
 
           <p
