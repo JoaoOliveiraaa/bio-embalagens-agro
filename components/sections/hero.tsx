@@ -63,9 +63,15 @@ export function HeroSection() {
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            <span className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm text-white rounded-full text-sm font-medium mb-6 border border-white/20">
-              <Leaf className="w-4 h-4" />
-              Pioneiros em Sustentabilidade Agrícola
+            <span className="inline-flex items-center justify-between gap-4 px-4 py-2 bg-white/10 backdrop-blur-sm text-white rounded-full text-xs sm:text-sm font-medium mb-6 border border-white/20 max-w-xl">
+              <span className="inline-flex items-center gap-2">
+                <Leaf className="w-4 h-4" />
+                <span>
+                  Pioneira em embalagens para aplicação via drone de agentes biológicos <em>"Cotesia flavipes"</em>
+                </span>
+              </span>
+
+             
             </span>
           </div>
 
@@ -75,8 +81,8 @@ export function HeroSection() {
             }`}
           >
             Embalagens{" "}
-            <span className="text-accent">Biodegradáveis</span>{" "}
-            para o Agronegócio
+            <span className="text-accent">Degradáveis</span>{" "}
+            para o Agro
           </h1>
 
           <p
